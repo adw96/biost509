@@ -1,13 +1,6 @@
----
-title: "BIOST 509: Introduction to R for Data Analysis in the Health Sciences"
-author: "Department of Biostatistics, University Of Washington"
-date: "Autumn 2019"
-output:
-  pdf_document:
-    number_sections: true
-    extra_dependencies: ["bbm", "hyperref"]
-linkcolor: 'red'
----
+# BIOST 509: Introduction to R for Data Analysis in the Health Sciences
+
+Welcome! If you are enrolled in the class, please find our latest class materials via our UW Canvas page.
 
 # Instructor, teaching assistants & lecture information
 
