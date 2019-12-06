@@ -1,0 +1,60 @@
+---
+title: "Effect of smoking on FEV"
+author: "Amy Willis"
+date: "11/29/2019"
+output: 
+    pdf_document:
+        number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Here is where I would introduce the study and provide motivation, etc.
+
+## Summary statistics
+
+Here are some summary statistics for the older participants in the FEV study:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hold'}
+library(tidyverse)
+fev <- read_csv("datasets/fev.csv")
+library(knitr)
+library(kableExtra)
+```
+
+```{r, echo=FALSE}
+fev %>%
+  filter(age > 16) %>%
+  rename(`Age (years)` = age) %>%
+  mutate(Sex = ifelse(sex == 1, "Male", "Female")) %>%
+  mutate(Smoker = ifelse(smoke == 1, "Yes", "No")) %>%
+  group_by(`Age (years)`, Sex, Smoker) %>%
+  summarise("Sample size" = n(), 
+            "Mean FEV (L)" = mean(fev) %>% round(2)) %>%
+  kable %>%
+  kable_styling(full_width = F,  
+                bootstrap_options = c("bordered","striped")) %>%
+  column_spec(1, border_left = T) %>%
+  column_spec(3, border_right = T) %>%
+  column_spec(5, bold = T, border_right = T) 
+```
+
+# Data analysis
+
+Here is a plot:
+
+```{r, echo=FALSE, fig.height=3, fig.width=5, fig.align='center'}
+fev %>%
+  filter(age < 18 & age > 9) %>%
+  mutate(sex = as.character(sex),
+         smoke = as.character(smoke),
+         age = as.factor(age)) %>%
+  ggplot(aes(x = age, y = fev, col = smoke)) +
+  geom_boxplot() + theme_bw()
+```
+
+Notice how there is no code shown in the pdf version of this document... but you can see it in the Rmd file. That was done by setting `echo=FALSE` in the code chunks that created the table and the figure.  
